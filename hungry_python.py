@@ -1,4 +1,4 @@
 class HungryPython:
+    """Main class"""
     def __init__(self):
-        """Main class"""
         pass

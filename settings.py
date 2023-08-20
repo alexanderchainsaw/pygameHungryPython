@@ -1,3 +1,11 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Settings:
-    def __init__(self):
-        pass
+    """Lower level class to store basic configuration settings"""
+    width: int
+    height: int
+    square_size: int
+    squares_x: int
+    squares_y: int
