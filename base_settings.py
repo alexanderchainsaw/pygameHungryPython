@@ -6,14 +6,14 @@ class BaseSettings:
     def __init__(self):
         """Initialize lower level settings for the game which are not to be altered"""
 
-        # Changing the following might lead to bugs and unintended behaviour
+        # !Changing the following might lead to bugs and unintended behaviour!
         self.width: int = 1000
         self.height: int = 700
         self.sqr_size: int = 40  # = 40x40 size of one movement unit
         self.sqr_x: int = int(self.width // self.sqr_size - 1)  # 24 squares in width
         self.sqr_y: int = int(self.height // self.sqr_size - 1)  # 17 squares in height
 
-        # Changing the following might affect intended game-design rules
+        # !Changing the following might affect intended game-design rules!
         self.points_for_lvlup: int = 10
         self.base_speed: int = 10
         self.speed_incr: int = 2
