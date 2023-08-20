@@ -3,7 +3,7 @@ import pygame
 
 
 class Settings(BaseSettings):
-    """A class to store settings and variables"""
+    """A class to store volatile in-game variables and states"""
     def __init__(self):
         """Gather lower level settings from the parent class"""
         super().__init__()
@@ -25,5 +25,9 @@ class Settings(BaseSettings):
         # 2. Current speed
         self.speed = self.base_speed
 
-        # 3. (x, y) snake position to manage directional movement
-        self.pos = (1, 0)
+        # 3. Snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
+        self.direction = (1, 0)
+
+    def reset(self):
+        """Reset environment according to current states"""
+        pass

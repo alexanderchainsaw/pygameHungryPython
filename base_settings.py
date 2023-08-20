@@ -2,7 +2,7 @@ import pygame
 
 
 class BaseSettings:
-    """Lower level class to store basic configuration settings"""
+    """Lower level class to store constant settings"""
     def __init__(self):
         """Initialize lower level settings for the game which are not to be altered"""
 
@@ -12,6 +12,7 @@ class BaseSettings:
         self.sqr_size: int = 40  # = 40x40 size of one movement unit
         self.sqr_x: int = int(self.width // self.sqr_size - 1)  # 24 squares in width
         self.sqr_y: int = int(self.height // self.sqr_size - 1)  # 17 squares in height
+        self.base_snake_position = ((3, 7), (2, 7), (1, 7))
 
         # !Changing the following might affect intended game-design rules!
         self.points_for_lvlup: int = 10

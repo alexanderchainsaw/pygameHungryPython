@@ -1,4 +1,9 @@
-class HungryPython:
+from settings import Settings
+
+
+class HungryPython(Settings):
     """Main class"""
     def __init__(self):
-        pass
+        super().__init__()
+
+
