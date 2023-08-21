@@ -4,6 +4,7 @@ from random import randint
 import pygame
 import sys
 
+
 class HungryPython(Settings, Snake):
     """Main class"""
     def __init__(self):
@@ -27,13 +28,27 @@ class HungryPython(Settings, Snake):
         self.speed = self.base_speed
 
         # 3. Snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
-        self.direction = self.starting_direction
+        self.dir = self.starting_direction
 
-    def reset(self):
-        """Reset variables according to current states"""
-        pass
+        # 4. Default starting snake
+        self.snake = self.spawn_snake()
+
+        # 5. Random food position
+        self.food = self.get_food()
+
+    def start(self):
+        """Start/restart the game according to current states of the game"""
+        if self.lost:
+            self.score, self.lvl, self.streak = 0, 0, 0
+            self.speed = self.base_speed
+        self.won = False
+        self.snake = self.spawn_snake()
+        self.button_pressed = False
+        self.running = True
+        # reset head img
 
     def get_food(self):
+        """Create food (x, y) position outside the snake body and obstacles"""
         x = randint(0, self.sqr_x)
         y = randint(0, self.sqr_y)
         while (x, y) in self.snake or (x, y) in self.obstacles:
