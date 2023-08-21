@@ -1,4 +1,5 @@
 import pygame
+from collections import deque
 
 
 class Settings:
@@ -15,6 +16,7 @@ class Settings:
         self.base_snake_position = ((3, 7), (2, 7), (1, 7))
 
         # !Changing the following might affect intended game-design rules!
+        self.initial_snake = deque([(3, 7), (2, 7), (1, 7)])
         self.points_for_lvlup: int = 10
         self.base_speed: int = 10
         self.speed_incr: int = 2
