@@ -1,15 +1,23 @@
+import pygame
+
 from settings import Settings
 from collections import deque
 
 
-class Snake:
+class Snake(Settings):
     def __init__(self):
-        self.settings = Settings()
-        self.body = self.spawn_snake()
+        super().__init__()
+        self.snake = self.spawn_snake()
 
     def spawn_snake(self):
         snake = deque()
-        snake += self.settings.base_snake_position
+        snake += self.base_snake_position
         return snake
+
+    def manage_direction(self):
+        pass
+
+
+
 
 
