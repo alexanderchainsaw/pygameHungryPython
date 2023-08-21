@@ -1,13 +1,11 @@
-import pygame
-
 from settings import Settings
 from collections import deque
 
 
 class Snake(Settings):
+    """Simple class for creating initial snake"""
     def __init__(self):
         super().__init__()
-        self.snake = self.spawn_snake()
 
     def spawn_snake(self):
         snake = deque()
