@@ -1,11 +1,10 @@
 from settings import Settings
-from snake import Snake
 from random import randint
 import pygame
 import sys
 
 
-class HungryPython(Settings, Snake):
+class HungryPython(Settings):
     """Main class"""
     def __init__(self):
         super().__init__()
@@ -31,7 +30,7 @@ class HungryPython(Settings, Snake):
         self.dir = self.starting_direction
 
         # 4. Default starting snake
-        self.snake = self.spawn_snake()
+        self.snake = self.initial_snake
 
         # 5. Random food position
         self.food = self.get_food()
@@ -42,7 +41,7 @@ class HungryPython(Settings, Snake):
             self.score, self.lvl, self.streak = 0, 0, 0
             self.speed = self.base_speed
         self.won = False
-        self.snake = self.spawn_snake()
+        self.snake = self.initial_snake
         self.button_pressed = False
         self.running = True
         # reset head img

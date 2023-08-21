@@ -13,10 +13,9 @@ class Settings:
         self.sqr_size: int = 40  # = 40x40 size of one movement unit
         self.sqr_x: int = int(self.width // self.sqr_size - 1)  # == 24 (25 squares in width)
         self.sqr_y: int = int(self.height // self.sqr_size - 1)  # == 17 (18 squares in height)
-        self.base_snake_position = ((3, 7), (2, 7), (1, 7))
+        self.initial_snake = deque([((3, 7), (2, 7), (1, 7))])
 
         # !Changing the following might affect intended game-design rules!
-        self.initial_snake = deque([(3, 7), (2, 7), (1, 7)])
         self.points_for_lvlup: int = 10
         self.base_speed: int = 10
         self.speed_incr: int = 2
