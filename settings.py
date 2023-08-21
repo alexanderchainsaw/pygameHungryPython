@@ -10,8 +10,8 @@ class Settings:
         self.width: int = 1000
         self.height: int = 700
         self.sqr_size: int = 40  # = 40x40 size of one movement unit
-        self.sqr_x: int = int(self.width // self.sqr_size - 1)  # 24 squares in width
-        self.sqr_y: int = int(self.height // self.sqr_size - 1)  # 17 squares in height
+        self.sqr_x: int = int(self.width // self.sqr_size - 1)  # == 24 (25 squares in width)
+        self.sqr_y: int = int(self.height // self.sqr_size - 1)  # == 17 (18 squares in height)
         self.base_snake_position = ((3, 7), (2, 7), (1, 7))
 
         # !Changing the following might affect intended game-design rules!
@@ -19,6 +19,8 @@ class Settings:
         self.base_speed: int = 10
         self.speed_incr: int = 2
         # Default snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
+        # Has the form of (x, y), which will be added to the current snake position,
+        # thus moving it in a certain direction
         self.starting_direction = (1, 0)
 
         # General initialization of pygame environment
