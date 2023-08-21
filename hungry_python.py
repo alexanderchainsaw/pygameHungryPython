@@ -132,11 +132,6 @@ class HungryPython(Settings, Snake):
             self.running = False
             self.lost = False
             self.score = 0
-            # change head
-            # this reminds of the start() method, integrate it
         else:
             self.snake.appendleft(self.food), self.snake.pop()
         self.food = self.get_food()
-
-
-
