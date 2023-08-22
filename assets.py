@@ -1,33 +1,36 @@
 import pygame
+from configuration import Configuration
 
 
-class Assets:  # TODO - inherit from config to collect sqr_size
+class Assets(Configuration):
     """Lower level class to store in-game assets"""
     def __init__(self):
-        """Initialize the assets"""
+        super().__init__()
+        """Initialize and transform assets according to configuration data"""
 
-        self.size = None  # TODO = sqr_size * 2
+        self.size = self._square_size * 2
 
-        self.background = pygame.image.load('background.png')
-        self.body_blue = pygame.image.load('PythonBody.png')
-        self.body_yellow = pygame.image.load('PythonBodyAlt.png')
-        self.head = pygame.image.load('PythonHead.png')
+        # TODO: find proper svg's and transform them
+        self.background = pygame.image.load('assets/background.png')
+        self.body_blue = pygame.image.load('assets/PythonBody.png')
+        self.body_yellow = pygame.image.load('assets/PythonBodyAlt.png')
+        self.head = pygame.image.load('assets/PythonHead.png')
 
-        c = pygame.transform.smoothscale(pygame.image.load('Assets/c.png'))
-        cplus = pygame.image.load('Assets/cplusplus.png')
-        csharp = pygame.image.load('Assets/csharp.png')
-        js = pygame.image.load('Assets/js.png')
-        java = pygame.image.load('Assets/java.png')
-        r = pygame.image.load('Assets/r.png')
-        ruby = pygame.image.load('Assets/ruby.png')
-        golang = pygame.image.load('Assets/golang.png')
-        php = pygame.image.load('Assets/php.png')
-        rust = pygame.image.load('Assets/rust.png')
-        swift = pygame.image.load('Assets/swift.png')
-        scala = pygame.image.load('Assets/scala.png')
-        kotlin = pygame.image.load('Assets/kotlin.png')
-        haskell = pygame.image.load('Assets/haskell.png')
+        c = pygame.transform.smoothscale(pygame.image.load('assets/c.png'), self.size)
+        cplus = pygame.image.load('assets/cplusplus.png')
+        csharp = pygame.image.load('assets/csharp.png')
+        js = pygame.image.load('assets/js.png')
+        java = pygame.image.load('assets/java.png')
+        r = pygame.image.load('assets/r.png')
+        ruby = pygame.image.load('assets/ruby.png')
+        golang = pygame.image.load('assets/golang.png')
+        php = pygame.image.load('assets/php.png')
+        rust = pygame.image.load('assets/rust.png')
+        swift = pygame.image.load('assets/swift.png')
+        scala = pygame.image.load('assets/scala.png')
+        kotlin = pygame.image.load('assets/kotlin.png')
+        haskell = pygame.image.load('assets/haskell.png')
 
         self.food_images = [c, cplus, csharp, js, java, r, ruby, rust, golang, php, swift, scala, kotlin, haskell]
 
-        self.forbidden_food = pygame.image.load('python.svg')
+        self.forbidden_food = pygame.image.load('assets/python.svg')
