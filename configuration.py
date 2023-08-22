@@ -24,8 +24,10 @@ class Configuration:
         self._sqr_x = self._screen_width // self._square_size - 1
         self._sqr_y = self._screen_height // self._square_size - 1
 
+        self._levels = [(), ()]
+
     def generate_levels(self):
-        """Generate obstacle positions according to configuration data"""
+        """Generate obstacle positions for in-game levels according to  collected configuration data"""
         def two():
             pass
 
