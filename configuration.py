@@ -1,4 +1,5 @@
 from screeninfo import get_monitors
+import math
 
 
 class Configuration:
@@ -17,4 +18,25 @@ class Configuration:
 
         if not self._screen_width or not self._screen_height:
             self._screen_width, self._screen_height = self.__DEFAULT
+
+        # Initialize configuration variables according to collected data
+        self._square_size = math.sqrt(math.sqrt(self._screen_width * self._screen_height))
+        self._sqr_x = self._screen_width // self._square_size - 1
+        self._sqr_y = self._screen_height // self._square_size - 1
+
+    def generate_levels(self):
+        """Generate obstacle positions according to configuration data"""
+        def two():
+            pass
+
+        def three():
+            pass
+
+        def four():
+            pass
+
+        def five():
+            pass
+
+
 

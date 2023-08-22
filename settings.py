@@ -11,11 +11,11 @@ class Settings(Configuration):
         the following settings are not recommended to be altered"""
 
         # !Changing the following might lead to bugs and unintended behaviour!
-        self.width: int = 1000
-        self.height: int = 700
-        self.sqr_size: int = 40  # = 40x40 size of one movement unit
-        self.sqr_x: int = int(self.width // self.sqr_size - 1)  # == 24 (25 squares in width)
-        self.sqr_y: int = int(self.height // self.sqr_size - 1)  # == 17 (18 squares in height)
+        self.width: int = self._screen_width
+        self.height: int = self._screen_height
+        self.sqr_size: int = self._square_size  # square root of one movement unit
+        self.sqr_x: int = self._sqr_x  # how many squares of playable area in width
+        self.sqr_y: int = self._sqr_y  # how many squares of playable area in height
         self.initial_snake = deque([((3, 7), (2, 7), (1, 7))])  # initial snake body
 
         # !Changing the following might affect intended game-design rules!
