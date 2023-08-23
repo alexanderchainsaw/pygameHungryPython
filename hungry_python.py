@@ -10,37 +10,28 @@ class HungryPython(Settings):
         super().__init__()
 
         # Environment variables to handle in-game scenarios:
-        # 1. Overall states of the game
-        self.running, self.won, self.lost = False, False, False
+        # 1. To check if game has started
+        self.running = False
 
         # 2. To allow only one movement button press per game tick
         self.button_pressed = False
 
-        # 3. Level-up related variables
-        self.score, self.lvl, self.streak = 0, 0, 0
+        # 3. Track score
+        self.score = 0
 
-        # Other dynamic variables:
-        # 1. Current set of obstacles according to current lvl
-        self.obstacles = self.levels[self.lvl]
-
-        # 2. Current speed
-        self.speed = self.base_speed
-
-        # 3. Snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
+        # Other dynamic variables
+        # 1. Snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
         self.dir = self.starting_direction
 
-        # 4. Default starting snake
+        # 2. Default starting snake
         self.snake = self.initial_snake
 
-        # 5. Random food position
+        # 3. Random food position
         self.food = self.get_food()
 
     def start(self):
         """Start/restart the game according to current states of the game"""
-        if self.lost:
-            self.score, self.lvl, self.streak = 0, 0, 0
-            self.speed = self.base_speed
-        self.won = False
+        self.score = 0
         self.snake = self.initial_snake
         self.button_pressed = False
         self.running = True
@@ -50,7 +41,7 @@ class HungryPython(Settings):
         """Create food (x, y) position outside the snake body and obstacles"""
         x = randint(0, self.sqr_x)
         y = randint(0, self.sqr_y)
-        while (x, y) in self.snake or (x, y) in self.obstacles:
+        while (x, y) in self.snake:
             x = randint(0, self.sqr_x)
             y = randint(0, self.sqr_y)
         return x, y
@@ -111,9 +102,8 @@ class HungryPython(Settings):
 
             if next_pos == self.food:
                 self.eat_food()
-            elif next_pos in self.snake or next_pos in self.obstacles:
+            elif next_pos in self.snake:
                 self.running = False
-                self.lost = True
             else:
                 self.snake.appendleft(next_pos), self.snake.pop()
 
@@ -123,14 +113,8 @@ class HungryPython(Settings):
             2. LvlUp if enough points
             3. Increment streak and speed if won"""
         self.score += 1
-        if self.score == self.points_for_lvlup:
-            self.lvl += 1
-            if self.lvl > len(self.levels)-1:
-                self.won = True
-                self.lvl = 0
-            self.running = False
-            self.lost = False
-            self.score = 0
-        else:
-            self.snake.appendleft(self.food), self.snake.pop()
+        self.snake.appendleft(self.food), self.snake.pop()
         self.food = self.get_food()
+
+    def check_win(self):
+        pass
