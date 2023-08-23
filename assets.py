@@ -1,4 +1,5 @@
 import pygame as pg
+
 from settings import Settings
 
 
@@ -75,11 +76,17 @@ class Assets(Settings):
         }
 
         # Assign proper assets according to square_size
-
         python, c, csharp, cplusplus, js, \
             java, go, php, rust, ruby, swift, scala, r = __ASSETS_SCALE[self.square_size][0]
         self.food_images = [c, csharp, cplusplus, js, java, go, php, rust, ruby, swift, scala, r]
         self.forbidden_food = python
-        self.head = __ASSETS_SCALE[self.square_size][1][1]
+
+        # Snake body in 2 classic Python colors
         self.body = __ASSETS_SCALE[self.square_size][1][0]
         self.body_yellow = __ASSETS_SCALE[self.square_size][1][2]
+
+        # Snake image for every direction
+        self.head_right = __ASSETS_SCALE[self.square_size][1][1]
+        self.head_up = pg.transform.rotate(self.head_right, 90)
+        self.head_left = pg.transform.rotate(self.head_up, 90)
+        self.head_down = pg.transform.rotate(self.head_left, 90)

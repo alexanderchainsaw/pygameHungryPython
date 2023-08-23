@@ -1,10 +1,13 @@
+import random
+
+from assets import Assets
 from settings import Settings
 from random import randint
 import pygame
 import sys
 
 
-class HungryPython(Settings):
+class HungryPython(Assets):
     """Main class"""
     def __init__(self):
         super().__init__()
@@ -29,13 +32,19 @@ class HungryPython(Settings):
         # 3. Random food position
         self.food = self.get_food()
 
+        # 4. Random food image
+        self.food_image = random.choice(self.food_images)
+
+        # 5. Snake head image
+        self.head_image = self.head_right
+
     def start(self):
         """Start/restart the game according to current states of the game"""
         self.score = 0
         self.snake = self.initial_snake
         self.button_pressed = False
         self.running = True
-        # reset head img
+        self.head_image = self.head_right
 
     def get_food(self):
         """Create food (x, y) position outside the snake body and obstacles"""
@@ -66,16 +75,16 @@ class HungryPython(Settings):
 
                     if event.key in (pygame.K_w, pygame.K_UP) and not self.dir[1]:
                         self.dir = (0, -1)
-                        # change head image
+                        self.head_image = self.head_up
                     elif event.key in (pygame.K_s, pygame.K_DOWN) and not self.dir[1]:
                         self.dir = (0, 1)
-                        # change head image
+                        self.head_image = self.head_down
                     elif event.key in (pygame.K_a, pygame.K_LEFT) and not self.dir[0]:
                         self.dir = (-1, 0)
-                        # change head image
+                        self.head_image = self.head_left
                     elif event.key in (pygame.K_d, pygame.K_RIGHT) and not self.dir[0]:
                         self.dir = (1, 0)
-                        # change head image
+                        self.head_image = self.head_right
                 self.button_pressed = True
 
     def handle_movement(self):
@@ -118,3 +127,4 @@ class HungryPython(Settings):
 
     def check_win(self):
         pass
+
