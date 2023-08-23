@@ -1,8 +1,8 @@
 import pygame
-from configuration import Configuration
+from settings import Settings
 
 
-class Assets(Configuration):
+class Assets(Settings):
     """Lower level class to store in-game assets"""
     def __init__(self):
         super().__init__()
