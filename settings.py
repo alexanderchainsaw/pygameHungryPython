@@ -1,24 +1,51 @@
 import pygame
 from collections import deque
-from configuration import Configuration
+import ctypes
 
 
-class Settings(Configuration):
+class Settings:
     """Lower level class to store constant settings"""
     def __init__(self):
-        super().__init__()
-        """Initialize lower level settings according to inherited configuration data,
-        the following settings are not recommended to be altered"""
+        """Collect user's monitor resolution and initialize constant variables"""
 
-        # !Changing the following might lead to bugs and unintended behaviour!
-        self.width: int = self._screen_width
-        self.height: int = self._screen_height
-        self.sqr_size: int = self._square_size
-        self.sqr_x: int = self._sqr_x  # how many squares of playable area in width
-        self.sqr_y: int = self._sqr_y  # how many squares of playable area in height
-        self.initial_snake = deque([((3, 7), (2, 7), (1, 7))])  # initial snake body
+        # for matching user's monitor resolution to predefined square sizes
+        self._SCREEN_TO_SIZE = {
+            (1280, 1024): 64,
+            (1366, 768): 40,
+            (1600, 900): 50,
+            (1920, 1080): 60,
+            (1920, 1200): 60,
+            (2560, 1440): 80,
+            (2752, 1152): 64,
+            (3440, 1440): 80,
+            (3840, 2160): 120,
+        }
 
-        # !Changing the following might affect intended game-design rules!
+        # Default specs, used if user's monitor resolution did not match predefined dictionary
+        self.__DEFAULT = (1000, 720, 40)
+
+        # Collect user's monitor resolution
+        user32 = ctypes.windll.user32
+        self.width = user32.GetSystemMetrics(0)
+        self.height = user32.GetSystemMetrics(1)
+
+        try:
+            self.square_size = self._SCREEN_TO_SIZE[(self.width, self.height)]
+        except KeyError:
+            print("[settings.py] - Screen resolution did not match any of the available values, "
+                  "switching to default resolution...")
+            self.width, self.height, self.square_size = self.__DEFAULT
+
+        # how many squares of playable area in width
+        self.sqr_x: int = self.width // self.square_size - 1
+
+        # how many squares of playable area in height
+        self.sqr_y: int = self.height // self.square_size - 1
+
+        # initial snake body
+        self.initial_snake = deque([((3, 7), (2, 7), (1, 7))])
+
+        # snake speed
         self.speed: int = 10
 
         # Default snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
