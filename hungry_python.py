@@ -64,9 +64,11 @@ class HungryPython(Settings):
 
             # Allow user to quit the game whenever
             if event.type == pygame.QUIT:
+                pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
                     sys.exit()
 
                 # handle game start
