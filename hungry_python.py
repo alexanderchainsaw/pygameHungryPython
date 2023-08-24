@@ -1,7 +1,7 @@
 import random
 
 from assets import Assets
-from settings import Settings
+from settings import spawn_snake
 from random import randint
 import pygame
 import sys
@@ -27,7 +27,7 @@ class HungryPython(Assets):
         self.dir = self.starting_direction
 
         # 2. Default starting snake
-        self.snake = self.initial_snake
+        self.snake = spawn_snake()
 
         # 3. Random food position
         self.food = self.get_food()
@@ -41,9 +41,12 @@ class HungryPython(Assets):
     def start(self):
         """Start/restart the game according to current states of the game"""
         self.score = 0
-        self.snake = self.initial_snake
+        self.snake = spawn_snake()
         self.button_pressed = False
         self.running = True
+        self.food = self.get_food()
+        self.food_image = random.choice(self.food_images)
+        self.dir = self.starting_direction
         self.head_image = self.head_right
 
     def get_food(self):
@@ -55,7 +58,7 @@ class HungryPython(Assets):
             y = randint(0, self.sqr_y)
         return x, y
 
-    def handle_input(self):
+    def _handle_input(self):
         """Handling user inputs"""
         for event in pygame.event.get():
 
@@ -87,7 +90,7 @@ class HungryPython(Assets):
                         self.head_image = self.head_right
                 self.button_pressed = True
 
-    def handle_movement(self):
+    def _handle_movement(self):
         """Method for handling snake movement"""
 
         def limit(x: int, y: int) -> tuple[int, int]:
@@ -110,21 +113,59 @@ class HungryPython(Assets):
             self.button_pressed = False
 
             if next_pos == self.food:
-                self.eat_food()
+                self._eat_food()
             elif next_pos in self.snake:
                 self.running = False
             else:
                 self.snake.appendleft(next_pos), self.snake.pop()
 
-    def eat_food(self):
-        """Handle scenarios when the food is eaten:
-            1. Increment score
-            2. LvlUp if enough points
-            3. Increment streak and speed if won"""
+    def _eat_food(self):
+        """Handle scenarios when the food is eaten:"""
+        if len(self.snake) == self.sqr_y * self.sqr_x - 1:
+            pass
+            # TODO: victory scenario
         self.score += 1
-        self.snake.appendleft(self.food), self.snake.pop()
+        self.snake.appendleft(self.food)
+        self.food_image = random.choice(self.food_images)
         self.food = self.get_food()
 
-    def check_win(self):
-        pass
+    def _draw_python(self):
+        """To paint the snake in 2 classic Python colors"""
+
+        # painting the body
+        for i in self.snake[:len(self.snake)//2]:
+            self.screen.blit(self.body,
+                             (i[0] * self.square_size, i[1] * self.square_size,
+                              self.square_size * 2, self.square_size * 2))
+        for i in self.snake[len(self.snake)//2:]:
+            self.screen.blit(self.body_yellow,
+                             (i[0] * self.square_size, i[1] * self.square_size,
+                              self.square_size * 2, self.square_size * 2))
+        # painting the head
+        self.screen.blit(self.head_image,
+                         (self.snake[0][0] * self.square_size, self.snake[0][1] * self.square_size,
+                          self.square_size * 2, self.square_size * 2))
+
+    def _draw_food(self):
+        if self.running:
+            self.screen.blit(self.food_image,
+                             (self.food[0] * self.square_size, self.food[1] * self.square_size,
+                              self.square_size, self.square_size))
+
+    def main(self):
+        while True:
+            self.screen.fill((255, 255, 255))
+            self._handle_input()
+            self._handle_movement()
+            self._draw_food()
+            self._draw_python()
+            pygame.display.update()
+            self.clock.tick(self.speed)
+
+
+if __name__ == "__main__":
+    game = HungryPython()
+    game.main()
+
+
 

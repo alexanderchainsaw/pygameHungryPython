@@ -1,6 +1,8 @@
 import pygame
+from pygame.locals import *
 from collections import deque
 import ctypes
+import itertools
 
 
 class Settings:
@@ -42,9 +44,6 @@ class Settings:
         # how many squares of playable area in height
         self.sqr_y: int = self.height // self.square_size - 1
 
-        # initial snake body
-        self.initial_snake = deque([((3, 7), (2, 7), (1, 7))])
-
         # snake speed
         self.speed: int = 10
 
@@ -58,3 +57,26 @@ class Settings:
         pygame.display.set_caption('Hungry Python')
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.width, self.height))
+
+
+class SliceableDeque(deque):
+    """For storing the snake and then painting it in two colors (we will need to slice it)"""
+
+    def __getitem__(self, index):
+        if isinstance(index, slice):
+            return type(self)(itertools.islice(self, index.start,
+                                               index.stop, index.step))
+        return deque.__getitem__(self, index)
+
+
+def spawn_snake():
+    """Create initial snake body"""
+    snake = SliceableDeque()
+    snake.append((3, 7))
+    snake.append((2, 7))
+    snake.append((1, 7))
+    return snake
+
+
+
+
