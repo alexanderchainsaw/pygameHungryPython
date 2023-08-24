@@ -58,6 +58,9 @@ class Settings:
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.width, self.height))
 
+        # main text font of the game
+        self.main_font = pygame.font.Font('AtariClassic-gry3.ttf', self.square_size//2)
+
 
 class SliceableDeque(deque):
     """For storing the snake and then painting it in two colors (we will need to slice it)"""

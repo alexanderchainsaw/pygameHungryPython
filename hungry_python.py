@@ -30,7 +30,7 @@ class HungryPython(Settings):
         self.snake = spawn_snake()
 
         # 3. Random food position
-        self.food = self.get_food()
+        self.food = self._get_food()
 
         # 4. Random food image
         self.food_image = random.choice(self.assets.food_images)
@@ -38,18 +38,18 @@ class HungryPython(Settings):
         # 5. Snake head image
         self.head_image = self.assets.head_right
 
-    def start(self):
+    def _start(self):
         """Start/restart the game according to current states of the game"""
         self.score = 0
         self.snake = spawn_snake()
         self.button_pressed = False
         self.running = True
-        self.food = self.get_food()
+        self.food = self._get_food()
         self.food_image = random.choice(self.assets.food_images)
         self.dir = self.starting_direction
         self.head_image = self.assets.head_right
 
-    def get_food(self):
+    def _get_food(self):
         """Create food (x, y) position outside the snake body and obstacles"""
         x = randint(0, self.sqr_x)
         y = randint(0, self.sqr_y)
@@ -71,7 +71,7 @@ class HungryPython(Settings):
 
                 # handle game start
                 elif event.key == pygame.K_RETURN and not self.running:
-                    self.start()
+                    self._start()
 
                 # handle direction change according to button presses if the game is running
                 elif self.running and not self.button_pressed:
@@ -127,7 +127,7 @@ class HungryPython(Settings):
         self.score += 1
         self.snake.appendleft(self.food)
         self.food_image = random.choice(self.assets.food_images)
-        self.food = self.get_food()
+        self.food = self._get_food()
 
     def _draw_python(self):
         """To paint the snake in 2 classic Python colors"""
@@ -147,10 +147,26 @@ class HungryPython(Settings):
                           self.square_size * 2, self.square_size * 2))
 
     def _draw_food(self):
+        """To paint food images at the food position"""
         if self.running:
             self.screen.blit(self.food_image,
                              (self.food[0] * self.square_size, self.food[1] * self.square_size,
                               self.square_size, self.square_size))
+
+    def _print_text(self):
+        """To print messages on screen"""
+        self.static_msg = self.main_font.render('Press ENTER to start or ESC to quit', True, (0, 0, 0))
+        self.score_track = self.main_font.render(f'Score: {self.score}', True, (0, 0, 0))
+
+        # Collecting sizes of messages to properly display them on the screen
+        self.score_width, self.score_height = self.main_font.size(f"Score: {self.score}")
+        self.static_width, self.static_height = self.main_font.size("Press ENTER to start or ESC to quit")
+
+        if not self.running:
+            self.screen.blit(self.static_msg, (self.width//2 - (self.static_width//2),
+                                               self.height//2 - (self.static_height//2)))
+        else:
+            self.screen.blit(self.score_track, (self.width//2 - (self.score_width//2), 0))
 
     def main(self):
         while True:
@@ -159,6 +175,7 @@ class HungryPython(Settings):
             self._handle_movement()
             self._draw_food()
             self._draw_python()
+            self._print_text()
             pygame.display.update()
             self.clock.tick(self.speed)
 
