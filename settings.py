@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 from collections import deque
 import ctypes
 import itertools
