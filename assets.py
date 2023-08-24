@@ -3,10 +3,10 @@ import pygame as pg
 from settings import Settings
 
 
-class Assets(Settings):
+class Assets:
     """Lower level class to store in-game assets"""
     def __init__(self):
-        super().__init__()
+        settings = Settings()
 
         __ASSETS_SCALE = {
             40: ((pg.image.load('assets/python_40px.png'), pg.image.load('assets/c_40px.png'),
@@ -77,16 +77,16 @@ class Assets(Settings):
 
         # Assign proper assets according to square_size
         python, c, csharp, cplusplus, js, \
-            java, go, php, rust, ruby, swift, scala, r = __ASSETS_SCALE[self.square_size][0]
+            java, go, php, rust, ruby, swift, scala, r = __ASSETS_SCALE[settings.square_size][0]
         self.food_images = [c, csharp, cplusplus, js, java, go, php, rust, ruby, swift, scala, r]
         self.forbidden_food = python
 
         # Snake body in 2 classic Python colors
-        self.body = __ASSETS_SCALE[self.square_size][1][0]
-        self.body_yellow = __ASSETS_SCALE[self.square_size][1][2]
+        self.body = __ASSETS_SCALE[settings.square_size][1][0]
+        self.body_yellow = __ASSETS_SCALE[settings.square_size][1][2]
 
         # Snake image for every direction
-        self.head_right = __ASSETS_SCALE[self.square_size][1][1]
+        self.head_right = __ASSETS_SCALE[settings.square_size][1][1]
         self.head_up = pg.transform.rotate(self.head_right, 90)
         self.head_left = pg.transform.rotate(self.head_up, 90)
         self.head_down = pg.transform.rotate(self.head_left, 90)

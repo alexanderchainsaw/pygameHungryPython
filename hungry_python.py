@@ -1,17 +1,17 @@
 import random
 
 from assets import Assets
-from settings import spawn_snake
+from settings import Settings, spawn_snake
 from random import randint
 import pygame
 import sys
 
 
-class HungryPython(Assets):
+class HungryPython(Settings):
     """Main class"""
     def __init__(self):
         super().__init__()
-
+        self.assets = Assets()
         # Environment variables to handle in-game scenarios:
         # 1. To check if game has started
         self.running = False
@@ -33,10 +33,10 @@ class HungryPython(Assets):
         self.food = self.get_food()
 
         # 4. Random food image
-        self.food_image = random.choice(self.food_images)
+        self.food_image = random.choice(self.assets.food_images)
 
         # 5. Snake head image
-        self.head_image = self.head_right
+        self.head_image = self.assets.head_right
 
     def start(self):
         """Start/restart the game according to current states of the game"""
@@ -45,9 +45,9 @@ class HungryPython(Assets):
         self.button_pressed = False
         self.running = True
         self.food = self.get_food()
-        self.food_image = random.choice(self.food_images)
+        self.food_image = random.choice(self.assets.food_images)
         self.dir = self.starting_direction
-        self.head_image = self.head_right
+        self.head_image = self.assets.head_right
 
     def get_food(self):
         """Create food (x, y) position outside the snake body and obstacles"""
@@ -78,16 +78,16 @@ class HungryPython(Assets):
 
                     if event.key in (pygame.K_w, pygame.K_UP) and not self.dir[1]:
                         self.dir = (0, -1)
-                        self.head_image = self.head_up
+                        self.head_image = self.assets.head_up
                     elif event.key in (pygame.K_s, pygame.K_DOWN) and not self.dir[1]:
                         self.dir = (0, 1)
-                        self.head_image = self.head_down
+                        self.head_image = self.assets.head_down
                     elif event.key in (pygame.K_a, pygame.K_LEFT) and not self.dir[0]:
                         self.dir = (-1, 0)
-                        self.head_image = self.head_left
+                        self.head_image = self.assets.head_left
                     elif event.key in (pygame.K_d, pygame.K_RIGHT) and not self.dir[0]:
                         self.dir = (1, 0)
-                        self.head_image = self.head_right
+                        self.head_image = self.assets.head_right
                 self.button_pressed = True
 
     def _handle_movement(self):
@@ -126,7 +126,7 @@ class HungryPython(Assets):
             # TODO: victory scenario
         self.score += 1
         self.snake.appendleft(self.food)
-        self.food_image = random.choice(self.food_images)
+        self.food_image = random.choice(self.assets.food_images)
         self.food = self.get_food()
 
     def _draw_python(self):
@@ -134,11 +134,11 @@ class HungryPython(Assets):
 
         # painting the body
         for i in self.snake[:len(self.snake)//2]:
-            self.screen.blit(self.body,
+            self.screen.blit(self.assets.body,
                              (i[0] * self.square_size, i[1] * self.square_size,
                               self.square_size * 2, self.square_size * 2))
         for i in self.snake[len(self.snake)//2:]:
-            self.screen.blit(self.body_yellow,
+            self.screen.blit(self.assets.body_yellow,
                              (i[0] * self.square_size, i[1] * self.square_size,
                               self.square_size * 2, self.square_size * 2))
         # painting the head
