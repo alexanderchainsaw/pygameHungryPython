@@ -1,7 +1,8 @@
 # <p align="center">HungryPython</p>
+![](https://github.com/alexanderchainsaw/pygameHungryPython/assets/126553365/16a23d50-3b6d-4341-b1be-cb2879a70183)
+
 This is a classic Snake game implemented using the Pygame library in Python. The game allows the player to control a snake to eat food and grow longer while avoiding collisions with the snake's own body.
 The snake is stylized to look like the one from Python logo, the food is represented by various programming langues logos.
-![](https://github.com/alexanderchainsaw/pygameHungryPython/assets/126553365/c527ef95-0a2e-4528-afb6-9c0a8ea73d16)
 
 
 ## Project Structure
