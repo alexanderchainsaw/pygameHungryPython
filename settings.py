@@ -54,6 +54,7 @@ class Settings:
         # General initialization of pygame environment
         pygame.init()
         pygame.display.set_caption('Hungry Python')
+        pygame.mouse.set_visible(False)
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.width, self.height))
 
