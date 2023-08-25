@@ -32,10 +32,14 @@ pip install -r /requirements.txt
 
 ## Usage
 1. Navigate to the project directory:
-cd pygame-snake
-2. Run the game:
-python main.py
-3. Use the arrow keys or `WASD` keys to control the snake.
-4. Press `ENTER` to start the game and `ESC` to quit.
-5. Avoid collisions with the snake's own body.
-6. Eat the food to grow longer and increase the score.
+```
+cd pygameHungryPython
+```
+3. Run the game:
+```
+python hungry_python.py
+```
+5. Use the arrow keys or `WASD` keys to control the snake.
+6. Press `ENTER` to start the game and `ESC` to quit.
+7. Avoid collisions with the snake's own body.
+8. Eat the food to grow longer and increase the score.
