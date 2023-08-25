@@ -38,6 +38,9 @@ class HungryPython(Settings):
         # 5. Snake head image
         self.head_image = self.assets.head_right
 
+        # 6. For printing proper message in case player won
+        self.won = False
+
     def _start(self):
         """Start/restart the game according to current states of the game"""
         self.score = 0
@@ -48,6 +51,7 @@ class HungryPython(Settings):
         self.food_image = random.choice(self.assets.food_images)
         self.dir = self.starting_direction
         self.head_image = self.assets.head_right
+        self.won = False
 
     def _get_food(self):
         """Create food (x, y) position outside the snake body and obstacles"""
@@ -123,9 +127,11 @@ class HungryPython(Settings):
 
     def _eat_food(self):
         """Handle scenarios when the food is eaten:"""
+
+        # check if player won
         if len(self.snake) == self.sqr_y * self.sqr_x - 1:
-            pass
-            # TODO: victory scenario
+            self.won = True
+
         self.score += 1
         self.snake.appendleft(self.food)
         self.food_image = random.choice(self.assets.food_images)
@@ -157,16 +163,21 @@ class HungryPython(Settings):
 
     def _print_text(self):
         """To print messages on screen"""
+        self.victory_msg = self.main_font.render('YOU WON!', True, (0, 0, 0))
         self.static_msg = self.main_font.render('Press ENTER to start or ESC to quit', True, (0, 0, 0))
         self.score_track = self.main_font.render(f'Score: {self.score}', True, (0, 0, 0))
 
         # Collecting sizes of messages to properly display them on the screen
+        self.v_width, self.v_height = self.main_font.size('YOU WON!')
         self.score_width, self.score_height = self.main_font.size(f"Score: {self.score}")
         self.static_width, self.static_height = self.main_font.size("Press ENTER to start or ESC to quit")
 
         if not self.running:
             self.screen.blit(self.static_msg, (self.width//2 - (self.static_width//2),
                                                self.height//2 - (self.static_height//2)))
+            if self.won:
+                self.screen.blit(self.victory_msg, (self.width//2 - self.v_width//2,
+                                 self.height//2 - self.v_height//2 - self.static_height*2))
         else:
             self.screen.blit(self.score_track, (self.width//2 - (self.score_width//2), 0))
 
