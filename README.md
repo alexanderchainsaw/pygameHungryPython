@@ -15,6 +15,7 @@ The project is organized into several files and directories:
 class which will be used to generate snake body and make it sliceable (which will be needed for painting the snake in 2 colors)
 Also contains
 - `assets.py`: This file contains the `Assets` class, which stores the in-game asset images. It loads the images based on the square size defined in the `Settings` class.
+- `assets` directory: Contains all visual assets for the game, has 40/50/60/64/80/120px versions of each file so there wouldn't be quality loss for different screen resolutions
 
 ## Requirements
 - Python 3
