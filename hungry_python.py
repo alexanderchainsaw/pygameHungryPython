@@ -32,13 +32,16 @@ class HungryPython(Settings):
         # 3. Random food position
         self.food = self._get_food()
 
-        # 4. Random food image
+        # 4. Random forbidden food position
+        self.forbidden_food = self._get_forbidden_food()
+
+        # 5. Random food image
         self.food_image = random.choice(self.assets.food_images)
 
-        # 5. Snake head image
+        # 6. Snake head image
         self.head_image = self.assets.head_right
 
-        # 6. For printing proper message in case player won
+        # 7. For printing proper message in case player won
         self.won = False
 
     def _start(self):
@@ -54,10 +57,19 @@ class HungryPython(Settings):
         self.won = False
 
     def _get_food(self):
-        """Create food (x, y) position outside the snake body and obstacles"""
+        """Create food (x, y) position outside the snake body"""
         x = randint(0, self.sqr_x)
         y = randint(0, self.sqr_y)
         while (x, y) in self.snake:
+            x = randint(0, self.sqr_x)
+            y = randint(0, self.sqr_y)
+        return x, y
+
+    def _get_forbidden_food(self):
+        """Create forbidden food (x, y) position outside snake body and regular food"""
+        x = randint(0, self.sqr_x)
+        y = randint(0, self.sqr_y)
+        while (x, y) in self.snake or (x, y) == self.food:
             x = randint(0, self.sqr_x)
             y = randint(0, self.sqr_y)
         return x, y
@@ -118,10 +130,21 @@ class HungryPython(Settings):
         if self.running:
             self.button_pressed = False
 
+            # Handle eating food
             if next_pos == self.food:
                 self._eat_food()
+
+            # Handle snake colliding with itself
+
             elif next_pos in self.snake:
                 self.running = False
+
+            # Handle eating forbidden food (only appears when score % 10 == 0)
+            elif next_pos == self.forbidden_food and not self.score % 10 and self.score:
+                self.snake.appendleft(next_pos), self.snake.pop()
+                self.running = False
+
+            # Append next square and discard last square to simulate movement
             else:
                 self.snake.appendleft(next_pos), self.snake.pop()
 
@@ -160,6 +183,12 @@ class HungryPython(Settings):
             self.screen.blit(self.food_image,
                              (self.food[0] * self.square_size, self.food[1] * self.square_size,
                               self.square_size, self.square_size))
+
+        # Draw forbidden food if score % 5 == 0 and score != 0
+            if not self.score % 10 and self.score:
+                self.screen.blit(self.assets.forbidden_food_image,
+                                 (self.forbidden_food[0] * self.square_size, self.forbidden_food[1] * self.square_size,
+                                  self.square_size, self.square_size))
 
     def _print_text(self):
         """To print messages on screen"""

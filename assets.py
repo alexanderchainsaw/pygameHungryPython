@@ -79,7 +79,7 @@ class Assets:
         python, c, csharp, cplusplus, js, \
             java, go, php, rust, ruby, swift, scala, r = __ASSETS_SCALE[settings.square_size][0]
         self.food_images = [c, csharp, cplusplus, js, java, go, php, rust, ruby, swift, scala, r]
-        self.forbidden_food = python
+        self.forbidden_food_image = python
 
         # Snake body in 2 classic Python colors
         self.body = __ASSETS_SCALE[settings.square_size][1][0]
