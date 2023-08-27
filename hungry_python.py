@@ -137,6 +137,7 @@ class HungryPython(Settings):
             # Handle snake colliding with itself
 
             elif next_pos in self.snake:
+                self.snake.appendleft(next_pos), self.snake.pop()
                 self.running = False
 
             # Handle eating forbidden food (only appears when score % 10 == 0)
