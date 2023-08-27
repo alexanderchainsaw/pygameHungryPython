@@ -135,7 +135,6 @@ class HungryPython(Settings):
                 self._eat_food()
 
             # Handle snake colliding with itself
-
             elif next_pos in self.snake:
                 self.snake.appendleft(next_pos), self.snake.pop()
                 self.running = False
