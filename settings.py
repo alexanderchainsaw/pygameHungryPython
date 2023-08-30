@@ -61,24 +61,23 @@ class Settings:
         # main text font of the game
         self.main_font = pygame.font.Font('AtariClassic-gry3.ttf', self.square_size//2)
 
+    @staticmethod
+    def spawn_snake():
+        """Create initial snake body"""
+        class SliceableDeque(deque):
+            """For storing the snake and then painting it in two colors (we will need to slice it)"""
 
-class SliceableDeque(deque):
-    """For storing the snake and then painting it in two colors (we will need to slice it)"""
+            def __getitem__(self, index):
+                if isinstance(index, slice):
+                    return type(self)(itertools.islice(self, index.start,
+                                                       index.stop, index.step))
+                return deque.__getitem__(self, index)
 
-    def __getitem__(self, index):
-        if isinstance(index, slice):
-            return type(self)(itertools.islice(self, index.start,
-                                               index.stop, index.step))
-        return deque.__getitem__(self, index)
-
-
-def spawn_snake():
-    """Create initial snake body"""
-    snake = SliceableDeque()
-    snake.append((3, 7))
-    snake.append((2, 7))
-    snake.append((1, 7))
-    return snake
+        snake = SliceableDeque()
+        snake.append((3, 7))
+        snake.append((2, 7))
+        snake.append((1, 7))
+        return snake
 
 
 

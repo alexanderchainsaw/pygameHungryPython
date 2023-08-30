@@ -1,7 +1,7 @@
 import random
 
 from assets import Assets
-from settings import Settings, spawn_snake
+from settings import Settings
 from random import randint
 import pygame
 import sys
@@ -30,7 +30,7 @@ class HungryPython(Settings):
         self.dir = self.starting_direction
 
         # 2. Default starting snake
-        self.snake = spawn_snake()
+        self.snake = self.spawn_snake()
 
         # 3. Random food position
         self.food = self._get_food()
@@ -50,7 +50,7 @@ class HungryPython(Settings):
     def _start(self):
         """Start/restart the game according to current states of the game"""
         self.score = 0
-        self.snake = spawn_snake()
+        self.snake = self.spawn_snake()
         self.button_pressed = False
         self.running = True
         self.food = self._get_food()
