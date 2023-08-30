@@ -163,72 +163,22 @@ class HungryPython(Settings):
         self.food_image = random.choice(self.assets.food_images)
         self.food = self._get_food()
 
-    # def _draw_python(self):
-    #     """To paint the snake in 2 classic Python colors"""
-    #
-    #     # painting the body
-    #     for i in self.snake[:len(self.snake)//2]:
-    #         self.screen.blit(self.assets.body,
-    #                          (i[0] * self.square_size, i[1] * self.square_size,
-    #                           self.square_size * 2, self.square_size * 2))
-    #     for i in self.snake[len(self.snake)//2:]:
-    #         self.screen.blit(self.assets.body_yellow,
-    #                          (i[0] * self.square_size, i[1] * self.square_size,
-    #                           self.square_size * 2, self.square_size * 2))
-    #     # painting the head
-    #     self.screen.blit(self.head_image,
-    #                      (self.snake[0][0] * self.square_size, self.snake[0][1] * self.square_size,
-    #                       self.square_size * 2, self.square_size * 2))
-
-    def _draw_food(self):
-        """To paint food images at the food position"""
-        if self.running:
-            self.screen.blit(self.food_image,
-                             (self.food[0] * self.square_size, self.food[1] * self.square_size,
-                              self.square_size, self.square_size))
-
-        # Draw forbidden food if score % 5 == 0 and score != 0
-            if not self.score % 10 and self.score:
-                self.screen.blit(self.assets.forbidden_food_image,
-                                 (self.forbidden_food[0] * self.square_size, self.forbidden_food[1] * self.square_size,
-                                  self.square_size, self.square_size))
-
-    def _print_text(self):
-        """To print messages on screen"""
-        self.victory_msg = self.main_font.render('YOU WON!', True, (0, 0, 0))
-        self.static_msg = self.main_font.render('Press ENTER to start or ESC to quit', True, (0, 0, 0))
-        self.score_track = self.main_font.render(f'Score: {self.score}', True, (0, 0, 0))
-
-        # Collecting sizes of messages to properly display them on the screen
-        self.v_width, self.v_height = self.main_font.size('YOU WON!')
-        self.score_width, self.score_height = self.main_font.size(f"Score: {self.score}")
-        self.static_width, self.static_height = self.main_font.size("Press ENTER to start or ESC to quit")
-
-        if not self.running:
-            self.screen.blit(self.static_msg, (self.width//2 - (self.static_width//2),
-                                               self.height//2 - (self.static_height//2)))
-            if self.won:
-                self.screen.blit(self.victory_msg, (self.width//2 - self.v_width//2,
-                                 self.height//2 - self.v_height//2 - self.static_height*2))
-        else:
-            self.screen.blit(self.score_track, (self.width//2 - (self.score_width//2), 0))
-
-    def main(self):
+    def run(self):
+        """Main method"""
         while True:
             self.screen.fill((255, 255, 255))
             self._handle_input()
             self._handle_movement()
-            self._draw_food()
+            self.display.draw_food(self.food_image, self.food, self.forbidden_food, self.score, self.running)
             self.display.draw_python(self.snake, self.head_image)
-            # self._draw_python()
-            self._print_text()
+            self.display.print_texts(self.running, self.won, self.score)
             pygame.display.update()
             self.clock.tick(self.speed)
 
 
 if __name__ == "__main__":
     game = HungryPython()
-    game.main()
+    game.run()
 
 
 
