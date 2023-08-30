@@ -6,12 +6,15 @@ from random import randint
 import pygame
 import sys
 
+from display import Display
+
 
 class HungryPython(Settings):
     """Main class"""
     def __init__(self):
         super().__init__()
         self.assets = Assets()
+        self.display = Display()
         # Environment variables to handle in-game scenarios:
         # 1. To check if game has started
         self.running = False
@@ -160,22 +163,22 @@ class HungryPython(Settings):
         self.food_image = random.choice(self.assets.food_images)
         self.food = self._get_food()
 
-    def _draw_python(self):
-        """To paint the snake in 2 classic Python colors"""
-
-        # painting the body
-        for i in self.snake[:len(self.snake)//2]:
-            self.screen.blit(self.assets.body,
-                             (i[0] * self.square_size, i[1] * self.square_size,
-                              self.square_size * 2, self.square_size * 2))
-        for i in self.snake[len(self.snake)//2:]:
-            self.screen.blit(self.assets.body_yellow,
-                             (i[0] * self.square_size, i[1] * self.square_size,
-                              self.square_size * 2, self.square_size * 2))
-        # painting the head
-        self.screen.blit(self.head_image,
-                         (self.snake[0][0] * self.square_size, self.snake[0][1] * self.square_size,
-                          self.square_size * 2, self.square_size * 2))
+    # def _draw_python(self):
+    #     """To paint the snake in 2 classic Python colors"""
+    #
+    #     # painting the body
+    #     for i in self.snake[:len(self.snake)//2]:
+    #         self.screen.blit(self.assets.body,
+    #                          (i[0] * self.square_size, i[1] * self.square_size,
+    #                           self.square_size * 2, self.square_size * 2))
+    #     for i in self.snake[len(self.snake)//2:]:
+    #         self.screen.blit(self.assets.body_yellow,
+    #                          (i[0] * self.square_size, i[1] * self.square_size,
+    #                           self.square_size * 2, self.square_size * 2))
+    #     # painting the head
+    #     self.screen.blit(self.head_image,
+    #                      (self.snake[0][0] * self.square_size, self.snake[0][1] * self.square_size,
+    #                       self.square_size * 2, self.square_size * 2))
 
     def _draw_food(self):
         """To paint food images at the food position"""
@@ -216,7 +219,8 @@ class HungryPython(Settings):
             self._handle_input()
             self._handle_movement()
             self._draw_food()
-            self._draw_python()
+            self.display.draw_python(self.snake, self.head_image)
+            # self._draw_python()
             self._print_text()
             pygame.display.update()
             self.clock.tick(self.speed)
