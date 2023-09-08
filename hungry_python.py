@@ -47,7 +47,7 @@ class HungryPython(Settings):
         # 7. For printing proper message in case player won
         self.won = False
 
-    def _start(self):
+    def _start(self) -> None:
         """Start/restart the game according to current states of the game"""
         self.score = 0
         self.snake = self.spawn_snake()
@@ -59,7 +59,7 @@ class HungryPython(Settings):
         self.head_image = self.assets.head_right
         self.won = False
 
-    def _get_food(self):
+    def _get_food(self) -> tuple[int, int]:
         """Create food (x, y) position outside the snake body"""
         x = randint(0, self.sqr_x)
         y = randint(0, self.sqr_y)
@@ -68,7 +68,7 @@ class HungryPython(Settings):
             y = randint(0, self.sqr_y)
         return x, y
 
-    def _get_forbidden_food(self):
+    def _get_forbidden_food(self) -> tuple[int, int]:
         """Create forbidden food (x, y) position outside snake body and regular food"""
         x = randint(0, self.sqr_x)
         y = randint(0, self.sqr_y)
@@ -77,7 +77,7 @@ class HungryPython(Settings):
             y = randint(0, self.sqr_y)
         return x, y
 
-    def _handle_input(self):
+    def _handle_input(self) -> None:
         """Handling user inputs"""
         for event in pygame.event.get():
 
@@ -111,7 +111,7 @@ class HungryPython(Settings):
                         self.head_image = self.assets.head_right
                 self.button_pressed = True
 
-    def _handle_movement(self):
+    def _handle_movement(self) -> None:
         """Method for handling snake movement"""
 
         def limit(x: int, y: int) -> tuple[int, int]:
@@ -151,7 +151,7 @@ class HungryPython(Settings):
             else:
                 self.snake.appendleft(next_pos), self.snake.pop()
 
-    def _eat_food(self):
+    def _eat_food(self) -> None:
         """Handle scenarios when the food is eaten:"""
 
         # check if player won
@@ -163,7 +163,7 @@ class HungryPython(Settings):
         self.food_image = random.choice(self.assets.food_images)
         self.food = self._get_food()
 
-    def run(self):
+    def run(self) -> None:
         """Main method"""
         while True:
             self.screen.fill((255, 255, 255))
