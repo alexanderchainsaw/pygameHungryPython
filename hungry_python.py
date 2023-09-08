@@ -1,5 +1,6 @@
 import random
 
+from collections import deque
 from assets import Assets
 from settings import Settings
 from random import randint
@@ -17,26 +18,26 @@ class HungryPython(Settings):
         self.display = Display()
         # Environment variables to handle in-game scenarios:
         # 1. To check if game has started
-        self.running = False
+        self.running: bool = False
 
         # 2. To allow only one movement button press per game tick
-        self.button_pressed = False
+        self.button_pressed: bool = False
 
         # 3. Track score
-        self.score = 0
+        self.score: int = 0
 
         # Other dynamic variables
         # 1. Snake direction to manage movement: (-1, 0), (1, 0), (0, -1), (0, 1) = LEFT, RIGHT, UP, DOWN
-        self.dir = self.starting_direction
+        self.dir: tuple[int, int] = self.starting_direction
 
         # 2. Default starting snake
-        self.snake = self.spawn_snake()
+        self.snake: deque[tuple[int, int], tuple[int, int], tuple[int, int]] = self.spawn_snake()
 
         # 3. Random food position
-        self.food = self._get_food()
+        self.food: tuple[int, int] = self._get_food()
 
         # 4. Random forbidden food position
-        self.forbidden_food = self._get_forbidden_food()
+        self.forbidden_food: tuple[int, int] = self._get_forbidden_food()
 
         # 5. Random food image
         self.food_image = random.choice(self.assets.food_images)
@@ -45,7 +46,7 @@ class HungryPython(Settings):
         self.head_image = self.assets.head_right
 
         # 7. For printing proper message in case player won
-        self.won = False
+        self.won: bool = False
 
     def _start(self) -> None:
         """Start/restart the game according to current states of the game"""
