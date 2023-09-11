@@ -31,7 +31,7 @@ class HungryPython(Settings):
         self.dir: tuple[int, int] = self.starting_direction
 
         # 2. Default starting snake
-        self.snake: deque[tuple[int, int], tuple[int, int], tuple[int, int]] = self.spawn_snake()
+        self.snake: deque[tuple[int, ...]] = self.spawn_snake()
 
         # 3. Random food position
         self.food: tuple[int, int] = self._get_food()
@@ -165,7 +165,7 @@ class HungryPython(Settings):
         self.food = self._get_food()
 
     def run(self) -> None:
-        """Main method"""
+        """Main loop"""
         while True:
             self.screen.fill((255, 255, 255))
             self._handle_input()

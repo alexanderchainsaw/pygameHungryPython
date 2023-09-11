@@ -1,5 +1,6 @@
 from settings import Settings
 from assets import Assets
+from collections import deque
 
 
 class Display:
@@ -8,7 +9,7 @@ class Display:
         self.settings = Settings()
         self.assets = Assets()
 
-    def draw_python(self, snake: tuple[tuple], head_image):
+    def draw_python(self, snake: deque[tuple], head_image):
         """Draw the snake in two pythonic colors"""
 
         # draw first half blue
