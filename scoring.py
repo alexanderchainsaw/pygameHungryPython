@@ -23,12 +23,16 @@ class Score:
                 pass
 
     @staticmethod
-    def give_score_data() -> {}:
-        """Return data from the score.csv file in dict format"""
+    def get_record():
+        """Get current highest score user has reached"""
         with open('score.csv') as f:
             pass
 
     @staticmethod
-    def update_score_data(score) -> None:
-        """Called everytime a game ends to update the top score if user has set a new record"""
-        pass
+    def add_record(score) -> None:
+        """If user has a new record score - this method is called"""
+        ...
+
+    def get_data(self):
+        """Get data from score.csv"""
+        ...
