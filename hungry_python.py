@@ -8,6 +8,7 @@ import pygame
 import sys
 
 from display import Display
+from scoring import Score
 
 
 class HungryPython(Settings):
@@ -47,6 +48,9 @@ class HungryPython(Settings):
 
         # 7. For printing proper message in case player won
         self.won: bool = False
+
+        # 8. Scoring class for storing user's scores over time, will be reinitialized after every loss/win
+        self.scoring = Score()
 
     def _start(self) -> None:
         """Start/restart the game according to current states of the game"""
