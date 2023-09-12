@@ -9,7 +9,6 @@ class Score:
     def __init__(self):
         self.create_if_not_exists()
         self.data: tuple[list, list, list] = self.get_data()
-        self.highest_score: int = self.get_record()
 
     @staticmethod
     def create_if_not_exists() -> None:
@@ -25,20 +24,28 @@ class Score:
                 writer = csv.DictWriter(file, fieldnames=['score', 'time', 'won'])
                 writer.writeheader()
 
-
     @staticmethod
     def get_record() -> int:
         """Get current highest score user has reached"""
         with open('score.csv') as f:
-            pass
+            ...
 
     @staticmethod
     def add_record(score, won) -> int | None:
         """If user has a new record score - this method is called"""
         ...
 
-    def get_data(self):
+    @staticmethod
+    def get_data() -> tuple[list, list, list]:
         """Get data from score.csv"""
-        ...
+        score, time, won = [], [], []
+        with open('score.csv') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                score.append(row['score'])
+                time.append(row['time'])
+                won.append(row['won'])
+        return score, time, won
+
 
 

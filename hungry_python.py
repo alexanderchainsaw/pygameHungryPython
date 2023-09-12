@@ -49,9 +49,6 @@ class HungryPython(Settings):
         # 7. For printing proper message in case player won
         self.won: bool = False
 
-        # 8. Scoring class for storing user's scores over time, will be reinitialized after every loss/win
-        self.scoring = Score()
-
     def _start(self) -> None:
         """Start/restart the game according to current states of the game"""
         self.score = 0
@@ -63,6 +60,9 @@ class HungryPython(Settings):
         self.dir = self.starting_direction
         self.head_image = self.assets.head_right
         self.won = False
+
+        # Scoring class for storing user's scores over time, will be reinitialized after every loss/win
+        self.scoring = Score()
 
     def _get_food(self) -> tuple[int, int]:
         """Create food (x, y) position outside the snake body"""
