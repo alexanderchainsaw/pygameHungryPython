@@ -1,14 +1,19 @@
 import csv
+from datetime import date
 
 
 class Score:
     """
     A class for documenting user's scores over time
-    Data will be stored inside 'score.csv' file with rows: score, time, won
+    Data will be stored inside 'score.csv' file with rows: score, time, session, won
+    * score: int = user's score
+    * time: YYYY-MM-DD = date when the game was played
+    * session: seconds = game duration
+    * won: bool = game result (victory=True/defeat=False)
     """
     def __init__(self):
         self.create_if_not_exists()
-        self.data: tuple[list, list, list] = self.get_data()
+        self.data: tuple[list, list, list, list] = self.get_data()
 
     @staticmethod
     def create_if_not_exists() -> None:
@@ -21,12 +26,12 @@ class Score:
                 pass
         except FileNotFoundError:
             with open('score.csv', 'w', newline='') as file:
-                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'won'])
+                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'length', 'won'])
                 writer.writeheader()
 
     @staticmethod
     def get_record() -> int:
-        """Get current highest score user has reached"""
+        """Get current highest score user has ever reached"""
         with open('score.csv') as file:
             scores = set()
             reader = csv.DictReader(file)
@@ -35,22 +40,25 @@ class Score:
 
             return max(scores)
 
-    @staticmethod
-    def add_record(score, won) -> int | None:
+    def add_record(self, current_score, won) -> None:
         """If user has a new record score - this method is called"""
-        ...
+        score, time, session, won = self.data
+        if current_score > self.get_record() or won:
+            with open('score.csv', 'w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'won'])
+                writer.writeheader()
+                for i in range(len(score)):
+                    writer.writerow({'score': score[i], 'time': time[i], 'session': session[i], 'won': won[i]})
 
     @staticmethod
-    def get_data() -> tuple[list, list, list]:
+    def get_data() -> tuple[list, list, list, list]:
         """Get data from score.csv"""
-        score, time, won = [], [], []
+        score, time, session, won = [], [], [], []
         with open('score.csv') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 score.append(row['score'])
                 time.append(row['time'])
+                session.append(row['session'])
                 won.append(row['won'])
-        return score, time, won
-
-
-
+        return score, time, session, won
