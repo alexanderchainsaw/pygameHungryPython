@@ -6,7 +6,7 @@ class Score:
     A class for documenting user's scores over time
     Data will be stored inside 'score.csv' file with rows: score, time, session, won
     * score: int = user's score
-    * time: YYYY-MM-DD-HH-MM = date when the game was played
+    * time: YYYY-MM-DD HH:MM = date when the game was played
     * session: MM-SS = game duration
     * won: bool = game result (victory=True/defeat=False)
     """
@@ -25,7 +25,7 @@ class Score:
                 pass
         except FileNotFoundError:
             with open('score.csv', 'w', newline='') as file:
-                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'length', 'won'])
+                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'session', 'won'])
                 writer.writeheader()
 
     @staticmethod
@@ -37,17 +37,18 @@ class Score:
             for row in reader:
                 scores.add(int(row['score']))
 
-            return max(scores)
+            return 0 if not scores else max(scores)
 
     def add_record(self, current_score, victory, start_time, ses_length) -> None:
         """If user has a new record score - this method updates existing csv with new data"""
         score, time, session, won = self.data
         if current_score > self.get_record() or victory:
             with open('score.csv', 'w', newline='') as file:
-                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'won'])
+                writer = csv.DictWriter(file, fieldnames=['score', 'time', 'session', 'won'])
                 writer.writeheader()
                 for i in range(len(score)):
                     writer.writerow({'score': score[i], 'time': time[i], 'session': session[i], 'won': won[i]})
+                writer.writerow({'score': current_score, 'time': start_time, 'session': ses_length, 'won': victory})
 
     @staticmethod
     def get_data() -> tuple[list, list, list, list]:
