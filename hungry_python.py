@@ -1,5 +1,5 @@
 import random
-
+from time import localtime, strftime, time
 from collections import deque
 from assets import Assets
 from settings import Settings
@@ -49,8 +49,16 @@ class HungryPython(Settings):
         # 7. For printing proper message in case player won
         self.won: bool = False
 
+        # 8. For recording accurate date and time of each session
+        self.start_date_time = None
+
+        # 9. For tracking session length
+        self.session_length = None
+
     def _start(self) -> None:
         """Start/restart the game according to current states of the game"""
+        self.start_date_time = None
+        self.session_length = None
         self.score = 0
         self.snake = self.spawn_snake()
         self.button_pressed = False
@@ -168,10 +176,20 @@ class HungryPython(Settings):
         self.food_image = random.choice(self.assets.food_images)
         self.food = self._get_food()
 
+    def _track_data(self):
+        if not self.session_length:
+            self.session_length = time()
+        if not self.start_date_time and self.running:
+            self.start_date_time = strftime("%Y-%m-%d %H:%M", localtime())
+        elif self.start_date_time and not self.running:
+            self.scoring.add_record(current_score=self.score, victory=self.won, start_time=self.start_date_time,
+                                    ses_length=round(time() - self.session_length))
+
     def run(self) -> None:
         """Main loop"""
         while True:
             self.screen.fill((255, 255, 255))
+            self._track_data()
             self._handle_input()
             self._handle_movement()
             self.display.draw_food(self.food_image, self.food, self.forbidden_food, self.score, self.running)

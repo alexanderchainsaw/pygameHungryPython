@@ -1,5 +1,4 @@
 import csv
-from datetime import date
 
 
 class Score:
@@ -7,16 +6,16 @@ class Score:
     A class for documenting user's scores over time
     Data will be stored inside 'score.csv' file with rows: score, time, session, won
     * score: int = user's score
-    * time: YYYY-MM-DD = date when the game was played
-    * session: seconds = game duration
+    * time: YYYY-MM-DD-HH-MM = date when the game was played
+    * session: MM-SS = game duration
     * won: bool = game result (victory=True/defeat=False)
     """
     def __init__(self):
-        self.create_if_not_exists()
+        self.create_if_doesnt_exist()
         self.data: tuple[list, list, list, list] = self.get_data()
 
     @staticmethod
-    def create_if_not_exists() -> None:
+    def create_if_doesnt_exist() -> None:
         """
         This method is called on class initialization
         to create an empty score.csv file if it doesn't exist
@@ -40,10 +39,10 @@ class Score:
 
             return max(scores)
 
-    def add_record(self, current_score, won) -> None:
-        """If user has a new record score - this method is called"""
+    def add_record(self, current_score, victory, start_time, ses_length) -> None:
+        """If user has a new record score - this method updates existing csv with new data"""
         score, time, session, won = self.data
-        if current_score > self.get_record() or won:
+        if current_score > self.get_record() or victory:
             with open('score.csv', 'w', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=['score', 'time', 'won'])
                 writer.writeheader()
