@@ -27,8 +27,13 @@ class Score:
     @staticmethod
     def get_record() -> int:
         """Get current highest score user has reached"""
-        with open('score.csv') as f:
-            ...
+        with open('score.csv') as file:
+            scores = set()
+            reader = csv.DictReader(file)
+            for row in reader:
+                scores.add(int(row['score']))
+
+            return max(scores)
 
     @staticmethod
     def add_record(score, won) -> int | None:
