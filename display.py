@@ -2,6 +2,7 @@ from settings import Settings
 from assets import Assets
 from collections import deque
 from scoring import Score
+from pygame import Surface, SurfaceType
 
 
 class Display:
@@ -13,7 +14,7 @@ class Display:
         self.spacing_h: int = self.settings.height//10
         self.spacing_w: int = self.settings.width//15
 
-    def draw_python(self, snake: deque[tuple], head_image) -> None:
+    def draw_python(self, snake: deque[tuple], head_image: Surface | SurfaceType) -> None:
         """Draw the snake in two pythonic colors"""
 
         # draw first half blue
@@ -34,7 +35,8 @@ class Display:
                                   (snake[0][0] * self.settings.square_size, snake[0][1] * self.settings.square_size,
                                    self.settings.square_size * 2, self.settings.square_size * 2))
 
-    def draw_food(self, food_image, food_pos: tuple, forbidden_food: tuple, score: int, running: bool) -> None:
+    def draw_food(self, food_image: Surface | SurfaceType,
+                  food_pos: tuple, forbidden_food: tuple, score: int, running: bool) -> None:
         """Draw food and (if conditions are met) forbidden food at their positions"""
 
         if running:

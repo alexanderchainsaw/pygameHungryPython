@@ -5,6 +5,7 @@ from assets import Assets
 from settings import Settings
 from random import randint
 import pygame
+from pygame import Surface, SurfaceType
 import sys
 
 from display import Display
@@ -41,19 +42,19 @@ class HungryPython(Settings):
         self.forbidden_food: tuple[int, int] = self._get_forbidden_food()
 
         # 5. Random food image
-        self.food_image = random.choice(self.assets.food_images)
+        self.food_image: Surface | SurfaceType = random.choice(self.assets.food_images)
 
         # 6. Snake head image
-        self.head_image = self.assets.head_right
+        self.head_image: Surface | SurfaceType = self.assets.head_right
 
         # 7. For printing proper message in case player won
         self.won: bool = False
 
         # 8. For recording accurate date and time of each session
-        self.start_date_time = None
+        self.start_date_time: float | None = None
 
         # 9. For tracking session length
-        self.session_length = None
+        self.session_length: str | None = None
 
     def _start(self) -> None:
         """Start/restart the game according to current states of the game"""
