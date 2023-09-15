@@ -39,7 +39,7 @@ class Score:
 
             return 0 if not scores else max(scores)
 
-    def add_record(self, current_score, victory, start_time, ses_length) -> None:
+    def add_record(self, current_score: int, victory: bool, start_time: str, ses_length: int) -> None:
         """If user has a new record score - this method updates existing csv with new data"""
         score, time, session, won = self.data
         if current_score > self.get_record() or victory:

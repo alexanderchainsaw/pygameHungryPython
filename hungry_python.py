@@ -184,7 +184,7 @@ class HungryPython(Settings):
             self.start_date_time = strftime("%Y-%m-%d %H:%M", localtime())
         elif self.start_date_time and not self.running:
             self.scoring.add_record(current_score=self.score, victory=self.won, start_time=self.start_date_time,
-                                    ses_length=round(time() - self.session_length))
+                                    ses_length=int(time() - self.session_length))
 
     def run(self) -> None:
         """Main loop"""
