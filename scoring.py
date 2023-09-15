@@ -7,7 +7,7 @@ class Score:
     Data will be stored inside 'score.csv' file with rows: score, time, session, won
     * score: int = user's score
     * time: YYYY-MM-DD HH:MM = date when the game was played
-    * session: MM-SS = game duration
+    * session: int (seconds) = game duration
     * won: bool = game result (victory=True/defeat=False)
     """
     def __init__(self):

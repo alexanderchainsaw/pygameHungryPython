@@ -73,18 +73,19 @@ class Display:
                 self.settings.screen.blit(victory_msg,
                                           (self.settings.width // 2 - v_width // 2,
                                            self.settings.height // 2 - v_height // 2 - static_height * 2))
-            self._print_score()
+            self._print_highest_score()
 
         else:
             # print user's current score
             self.settings.screen.blit(score_track,
                                       (self.settings.width//2 - (score_width//2), 0))
 
-    def _print_score(self) -> None:
-        """To print score information on main screen"""
+    def _print_highest_score(self) -> None:
+        """To print highest score information on main screen
+        This function is called inside print_texts() function"""
 
         def give_color(s) -> tuple[int, int, int]:
-            """Give proper color for displaying session result data
+            """Helper func to give proper color for displaying session result data
             * If won - give RGB color green
             * If lost - give RGB color red"""
             match s:
@@ -93,9 +94,12 @@ class Display:
                 case 'False':
                     return 255, 0, 0
 
+        # try to get existing highest score (it's not found only when user plays for the first time)
         if not self.scoring.get_record():
             pass
         else:
+            # the code below ensures that user's highest score will be outputted on main screen
+
             ses_scores, ses_dates, ses_len, ses_results = self.scoring.get_data()
 
             # render messages
