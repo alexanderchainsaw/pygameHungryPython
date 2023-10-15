@@ -111,9 +111,7 @@ class Display:
 
             # collect sizes of messages
             header_w, header_h = self.settings.main_font.size('Your best result:')
-            score_w, score_h = self.settings.main_font.size('___')
             date_w, date_h = self.settings.main_font.size('YYYY-MM-DD HH:MM')
-            len_w, len_s = self.settings.main_font.size('____')
 
             self.settings.screen.blit(header_msg,
                                       (self.settings.width // 2 - (header_w // 2),

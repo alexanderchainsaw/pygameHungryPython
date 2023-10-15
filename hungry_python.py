@@ -18,6 +18,7 @@ class HungryPython(Settings):
         super().__init__()
         self.assets = Assets()
         self.display = Display()
+
         # Environment variables to handle in-game scenarios:
         # 1. To check if game has started
         self.running: bool = False
